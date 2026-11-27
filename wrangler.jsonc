@@ -1,0 +1,11 @@
+// Cloudflare Worker that serves the built site (apps/site/dist) as static files.
+// Workers Builds runs `pnpm run build`, then `npx wrangler@4.161.0 deploy`.
+{
+  "name": "mezgeb-io",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./apps/site/dist",
+    // Astro writes 404.html; serve it for unknown paths.
+    "not_found_handling": "404-page"
+  }
+}
