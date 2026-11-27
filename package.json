@@ -1,0 +1,15 @@
+{
+  "name": "mezgeb.io",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.28.11",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "sync": "node scripts/sync-mezgeb.mjs",
+    "dev": "pnpm sync && pnpm --filter site dev",
+    "build": "pnpm sync && pnpm --filter site build",
+    "check": "pnpm sync && pnpm --filter site check"
+  }
+}

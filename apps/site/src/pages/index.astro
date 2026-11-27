@@ -1,0 +1,74 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { Aside, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import source from '../../generated/source.json';
+
+const repo = 'https://github.com/atronsa/mezgeb';
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Mezgeb',
+    description: 'An open-source double-entry ledger with offline sync and cryptographically signed transactions.',
+    template: 'splash',
+    pagefind: false,
+    hero: {
+      title: 'The ledger that keeps its books when the network does not',
+      tagline:
+        'Mezgeb is an open-source double-entry ledger in Rust on PostgreSQL, with offline payments and cryptographically signed transactions.',
+      actions: [
+        { text: 'Read the docs', link: '/docs/', icon: 'right-arrow' },
+        { text: 'API reference', link: '/api/', variant: 'secondary' },
+        { text: 'GitHub', link: repo, icon: 'github', variant: 'minimal' },
+      ],
+    },
+  }}
+>
+  <Aside type="caution" title="Early development">
+    Mezgeb is not production ready yet. Do not use it to hold real money. The
+    <a href="/docs/roadmap/">roadmap</a> shows what is built and what comes next.
+  </Aside>
+
+  <CardGrid>
+    <Card title="Every entry balances" icon="approve-check">
+      Double entry is enforced three times: by Rust types, by the posting engine, and by the
+      database itself. Posted entries never change; corrections are reversals.
+    </Card>
+    <Card title="Offline is a first-class case" icon="rocket">
+      Funds for offline use sit in escrow. Each offline payment is a signed, hash-chained receipt
+      that the ledger settles exactly once, whatever order devices sync in.
+    </Card>
+    <Card title="Tamper-evident history" icon="seti:lock">
+      The journal is hash-chained with signed checkpoints, and every change lands in an
+      append-only audit log. Balances are re-proven against the journal.
+    </Card>
+    <Card title="Safe to retry, safe under load" icon="random">
+      Idempotent posting means a retry never charges twice. Row-level locking means the same
+      balance cannot be spent twice. Money is integer minor units, never floats.
+    </Card>
+  </CardGrid>
+
+  <h2>Start reading</h2>
+  <CardGrid>
+    <LinkCard title="Specification" description="What the ledger guarantees." href="/docs/spec/" />
+    <LinkCard title="Invariants" description="Every rule it must never break, and how each is tested." href="/docs/invariants/" />
+    <LinkCard title="Offline protocol" description="Vouchers, receipts and settlement." href="/docs/offline/" />
+    <LinkCard title="Security" description="Threat model, ASVS self-assessment, and how to report." href="/security/" />
+  </CardGrid>
+
+  <p class="source">
+    Apache-2.0 licensed. Docs built from
+    <a href={`${repo}/tree/${source.linkRef}`}>atronsa/mezgeb @ {source.ref === 'local' ? 'a local checkout' : source.ref}</a>.
+  </p>
+</StarlightPage>
+
+<style>
+  h2 {
+    margin-top: 3rem;
+  }
+  .source {
+    margin-top: 3rem;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+</style>

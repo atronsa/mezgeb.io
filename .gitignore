@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.cache/
+.wrangler/
+.env
+.env.*
+
+# Filled by scripts/sync-mezgeb.mjs from the mezgeb repo; never edited here.
+apps/site/src/content/docs/docs/
+apps/site/src/content/docs/security.md
+apps/site/generated/

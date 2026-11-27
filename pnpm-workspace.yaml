@@ -1,0 +1,6 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Refuse any package version published less than 14 days ago (in minutes).
+minimumReleaseAge: 20160
