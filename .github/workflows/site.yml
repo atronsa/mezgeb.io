@@ -43,7 +43,9 @@ jobs:
       name: production
       url: https://mezgeb.io
     steps:
-      - uses: actions/checkout@v7
+      # No checkout: the job only needs the built site. A checkout would bring
+      # pnpm-lock.yaml, and wrangler-action would then try to install wrangler
+      # with pnpm, which this job does not set up.
       - uses: actions/download-artifact@v7
         with:
           name: site
@@ -52,5 +54,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: npm
           wranglerVersion: "4.161.0"
           command: pages deploy dist --project-name=mezgeb-io --branch=main
