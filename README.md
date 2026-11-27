@@ -37,10 +37,22 @@ Dependencies must be at least 14 days old (`minimumReleaseAge` in
 
 ## Deploy
 
-`.github/workflows/site.yml` builds every pull request. On `main`, it
-deploys `apps/site/dist` to the Cloudflare Pages project `mezgeb-io`. It
-needs the repository secrets `CLOUDFLARE_API_TOKEN` (scope: Cloudflare Pages,
-Edit) and `CLOUDFLARE_ACCOUNT_ID`.
+The Cloudflare Pages project `mezgeb-io` is connected to this repo. It
+builds and deploys `main` to mezgeb.io, and gives every pull request a
+preview URL. Its build settings:
+
+| Setting | Value |
+|---|---|
+| Build command | `pnpm build` |
+| Build output directory | `apps/site/dist` |
+| Root directory | *(empty: repo root)* |
+| Env vars | `NODE_VERSION=24`, `PNPM_VERSION=11.28.11`, `CI=true` |
+
+Keep `NODE_VERSION` and `PNPM_VERSION` in step with `.nvmrc` and
+`packageManager` in `package.json`.
+
+`.github/workflows/site.yml` runs the same sync, type check and link check
+on every pull request, as a required check.
 
 ## License
 
