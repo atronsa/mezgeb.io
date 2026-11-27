@@ -37,19 +37,22 @@ Dependencies must be at least 14 days old (`minimumReleaseAge` in
 
 ## Deploy
 
-The Cloudflare Pages project `mezgeb-io` is connected to this repo. It
-builds and deploys `main` to mezgeb.io, and gives every pull request a
-preview URL. Its build settings:
+The Cloudflare Worker `mezgeb-io` (Workers Builds) is connected to this
+repo. It builds and deploys `main` to mezgeb.io, and gives every pull
+request a preview URL. It serves `apps/site/dist` as static files, as set
+in [`wrangler.jsonc`](wrangler.jsonc). Its build settings:
 
 | Setting | Value |
 |---|---|
-| Build command | `pnpm build` |
-| Build output directory | `apps/site/dist` |
+| Build command | `pnpm run build` |
+| Deploy command | `npx wrangler@4.161.0 deploy` |
+| Preview command | `npx wrangler@4.161.0 versions upload` |
 | Root directory | *(empty: repo root)* |
-| Env vars | `NODE_VERSION=24`, `PNPM_VERSION=11.28.11`, `CI=true` |
+| Build variables | `NODE_VERSION=24`, `PNPM_VERSION=11.28.11`, `CI=true` |
 
 Keep `NODE_VERSION` and `PNPM_VERSION` in step with `.nvmrc` and
-`packageManager` in `package.json`.
+`packageManager` in `package.json`. Wrangler is pinned in the commands
+because it is not a dependency of this repo.
 
 `.github/workflows/site.yml` runs the same sync, type check and link check
 on every pull request, as a required check.
